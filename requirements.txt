@@ -4,3 +4,4 @@ neo4j
 python-dotenv
 pydantic[email]
 gunicorn
+neo4j
