@@ -1,44 +1,74 @@
 # app/schemas.py
 from pydantic import BaseModel, EmailStr
 from typing import Optional
+from datetime import datetime
 
-# ---- USERS ----
-class UserCreate(BaseModel):
+
+# ===================== USERS =====================
+class UserBase(BaseModel):
     username: str
     email: EmailStr
+
+
+class UserCreate(UserBase):
+    pass
+
 
 class UserUpdate(BaseModel):
     username: Optional[str] = None
     email: Optional[EmailStr] = None
 
-class UserOut(BaseModel):
-    id: str
-    username: str
-    email: EmailStr
 
-# ---- POSTS ----
-class PostCreate(BaseModel):
+class UserOut(UserBase):
+    id: str
+
+
+# ===================== POSTS =====================
+class PostBase(BaseModel):
     content: str
+
+
+class PostCreate(PostBase):
+    username: str   # author username
+
 
 class PostUpdate(BaseModel):
     content: Optional[str] = None
 
-class PostOut(BaseModel):
+
+class PostOut(PostBase):
     id: str
-    content: str
-    created_at: str
+    created_at: datetime
     author: str
 
-# ---- COMMENTS ----
-class CommentCreate(BaseModel):
+
+# ===================== COMMENTS =====================
+class CommentBase(BaseModel):
     content: str
+
+
+class CommentCreate(CommentBase):
+    username: str
+    post_id: str
+
 
 class CommentUpdate(BaseModel):
     content: Optional[str] = None
 
-class CommentOut(BaseModel):
+
+class CommentOut(CommentBase):
     id: str
-    content: str
-    created_at: str
+    created_at: datetime
     author: str
     post_id: str
+
+
+# ===================== FOLLOW =====================
+class FollowCreate(BaseModel):
+    follower: str     # username of follower
+    following: str    # username of user being followed
+
+
+class FollowOut(BaseModel):
+    follower: str
+    following: str
