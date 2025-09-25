@@ -1,6 +1,6 @@
 fastapi
-uvicorn
+uvicorn[standard]
 neo4j
 python-dotenv
-passlib[bcrypt]
-python-jose[cryptography]
+pydantic[email]
+gunicorn
